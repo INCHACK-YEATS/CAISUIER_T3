@@ -5,970 +5,956 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>水杉班委改革 · 官方网站</title>
   <style>
-    /* ===== CSS Reset & Variables ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --green-900: #064e3b;
-      --green-800: #065f46;
-      --green-700: #047857;
-      --green-600: #059669;
-      --green-500: #10b981;
-      --green-400: #34d399;
-      --green-300: #6ee7b7;
-      --green-100: #d1fae5;
-      --green-50:  #ecfdf5;
-      --gray-900: #111827;
-      --gray-800: #1f2937;
-      --gray-700: #374151;
-      --gray-600: #4b5563;
-      --gray-400: #9ca3af;
-      --gray-200: #e5e7eb;
-      --gray-100: #f3f4f6;
+      --green-900: #064e3b; --green-800: #065f46; --green-700: #047857;
+      --green-600: #059669; --green-500: #10b981; --green-400: #34d399;
+      --green-300: #6ee7b7; --green-200: #a7f3d0; --green-100: #d1fae5; --green-50: #ecfdf5;
+      --red-700: #b91c1c; --red-600: #dc2626; --red-100: #fee2e2; --red-50: #fef2f2;
+      --gray-900: #111827; --gray-800: #1f2937; --gray-700: #374151;
+      --gray-600: #4b5563; --gray-400: #9ca3af; --gray-200: #e5e7eb; --gray-100: #f3f4f6;
       --white: #ffffff;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
-      --shadow-md: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
-      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04);
-      --radius-sm: 6px;
-      --radius-md: 10px;
-      --radius-lg: 16px;
-      --radius-xl: 24px;
-      --transition: all .3s cubic-bezier(.4,0,.2,1);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.1); --shadow-md: 0 4px 6px -1px rgba(0,0,0,.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.1); --shadow-xl: 0 20px 25px -5px rgba(0,0,0,.1);
+      --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-xl: 24px;
+      --t: all .3s cubic-bezier(.4,0,.2,1);
     }
-
     html { scroll-behavior: smooth; }
-    body {
-      font-family: 'PingFang SC','Microsoft YaHei','Hiragino Sans GB',sans-serif;
-      color: var(--gray-800);
-      background: var(--white);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
+    body { font-family: 'PingFang SC','Microsoft YaHei','Hiragino Sans GB',sans-serif; color: var(--gray-800); background: var(--white); line-height: 1.7; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--gray-100); } ::-webkit-scrollbar-thumb { background: var(--green-400); border-radius: 3px; }
 
-    /* ===== Scrollbar ===== */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--gray-100); }
-    ::-webkit-scrollbar-thumb { background: var(--green-400); border-radius: 3px; }
-
-    /* ===== Navigation ===== */
-    #navbar {
-      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(16,185,129,.15);
-      transition: var(--transition);
-    }
+    /* NAV */
+    #navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: rgba(255,255,255,.92); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(16,185,129,.15); transition: var(--t); }
     #navbar.scrolled { box-shadow: var(--shadow-md); }
-    .nav-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 24px;
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 10px; text-decoration: none;
-    }
-    .nav-logo .logo-icon {
-      width: 38px; height: 38px; background: linear-gradient(135deg, var(--green-700), var(--green-400));
-      border-radius: 10px; display: flex; align-items: center; justify-content: center;
-      font-size: 18px; flex-shrink: 0;
-    }
-    .nav-logo .logo-text { font-size: 16px; font-weight: 700; color: var(--green-800); letter-spacing: .5px; }
-    .nav-logo .logo-sub  { font-size: 11px; color: var(--gray-400); }
-    .nav-links { display: flex; gap: 6px; align-items: center; }
-    .nav-links a {
-      text-decoration: none; color: var(--gray-700); font-size: 14px; font-weight: 500;
-      padding: 6px 14px; border-radius: 20px; transition: var(--transition);
-    }
-    .nav-links a:hover, .nav-links a.active {
-      background: var(--green-50); color: var(--green-700);
-    }
-    .nav-cta {
-      background: linear-gradient(135deg, var(--green-700), var(--green-500)) !important;
-      color: var(--white) !important; box-shadow: var(--shadow-sm);
-    }
-    .nav-cta:hover { transform: translateY(-1px); box-shadow: var(--shadow-md) !important; }
+    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--green-700), var(--green-400)); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+    .nav-logo .logo-text { font-size: 15px; font-weight: 700; color: var(--green-800); }
+    .nav-logo .logo-sub { font-size: 11px; color: var(--gray-400); }
+    .nav-links { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+    .nav-links a { text-decoration: none; color: var(--gray-700); font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 20px; transition: var(--t); }
+    .nav-links a:hover, .nav-links a.active { background: var(--green-50); color: var(--green-700); }
+    .nav-cta { background: linear-gradient(135deg, var(--green-700), var(--green-500)) !important; color: var(--white) !important; }
 
-    /* ===== Hero Section ===== */
-    #hero {
-      min-height: 100vh;
-      background: linear-gradient(160deg, #064e3b 0%, #065f46 35%, #047857 65%, #059669 100%);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-      padding-top: 80px;
-    }
-    .hero-bg-circles {
-      position: absolute; inset: 0; pointer-events: none;
-    }
-    .hero-bg-circles span {
-      position: absolute; border-radius: 50%; opacity: .08;
-      background: var(--white);
-      animation: float 8s ease-in-out infinite;
-    }
-    .hero-bg-circles span:nth-child(1) { width: 600px; height: 600px; top: -200px; right: -150px; animation-delay: 0s; }
-    .hero-bg-circles span:nth-child(2) { width: 400px; height: 400px; bottom: -100px; left: -100px; animation-delay: 2s; }
-    .hero-bg-circles span:nth-child(3) { width: 250px; height: 250px; top: 40%; left: 20%; animation-delay: 4s; }
-    @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-20px) scale(1.03); }
-    }
-    .hero-content {
-      text-align: center; color: var(--white); max-width: 760px;
-      padding: 40px 24px; position: relative; z-index: 1;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
-      border-radius: 30px; padding: 6px 18px; font-size: 13px;
-      font-weight: 600; letter-spacing: 1px; margin-bottom: 28px;
-      backdrop-filter: blur(8px);
-    }
-    .hero-badge .dot {
-      width: 8px; height: 8px; background: var(--green-300);
-      border-radius: 50%; animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: .5; transform: scale(1.4); }
-    }
-    .hero-title {
-      font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 800;
-      line-height: 1.15; letter-spacing: -1px; margin-bottom: 12px;
-    }
-    .hero-title .accent {
-      background: linear-gradient(90deg, #6ee7b7, #a7f3d0);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(255,255,255,.8);
-      margin-bottom: 16px; font-weight: 500;
-    }
-    .hero-quote {
-      font-size: 13px; color: rgba(255,255,255,.6); font-style: italic;
-      border-left: 3px solid var(--green-400); padding-left: 14px;
-      text-align: left; margin: 20px auto 36px; max-width: 520px;
-    }
+    /* HERO */
+    #hero { min-height: 100vh; background: linear-gradient(160deg, #064e3b 0%, #065f46 35%, #047857 65%, #059669 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding-top: 80px; }
+    .hero-bg span { position: absolute; border-radius: 50%; opacity: .07; background: var(--white); animation: float 8s ease-in-out infinite; }
+    .hero-bg span:nth-child(1) { width: 600px; height: 600px; top: -200px; right: -150px; }
+    .hero-bg span:nth-child(2) { width: 400px; height: 400px; bottom: -100px; left: -100px; animation-delay: 2s; }
+    .hero-bg span:nth-child(3) { width: 250px; height: 250px; top: 40%; left: 20%; animation-delay: 4s; }
+    @keyframes float { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-20px) scale(1.03); } }
+    .hero-content { text-align: center; color: var(--white); max-width: 760px; padding: 40px 24px; position: relative; z-index: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 30px; padding: 6px 18px; font-size: 13px; font-weight: 600; letter-spacing: 1px; margin-bottom: 28px; }
+    .hero-badge .dot { width: 8px; height: 8px; background: var(--green-300); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(1.4); } }
+    .hero-title { font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 800; line-height: 1.15; letter-spacing: -1px; margin-bottom: 12px; }
+    .hero-title .accent { background: linear-gradient(90deg, #6ee7b7, #a7f3d0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: clamp(.95rem, 2vw, 1.15rem); color: rgba(255,255,255,.8); margin-bottom: 16px; }
+    .hero-quote { font-size: 13px; color: rgba(255,255,255,.6); font-style: italic; border-left: 3px solid var(--green-400); padding-left: 14px; text-align: left; margin: 20px auto 36px; max-width: 520px; }
     .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 13px 28px; border-radius: 30px; font-size: 15px;
-      font-weight: 600; text-decoration: none; transition: var(--transition);
-      cursor: pointer; border: none; outline: none;
-    }
-    .btn-primary {
-      background: var(--white); color: var(--green-800);
-      box-shadow: var(--shadow-md);
-    }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; border-radius: 30px; font-size: 14px; font-weight: 600; text-decoration: none; transition: var(--t); cursor: pointer; border: none; }
+    .btn-primary { background: var(--white); color: var(--green-800); box-shadow: var(--shadow-md); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-xl); }
-    .btn-ghost {
-      background: rgba(255,255,255,.12); color: var(--white);
-      border: 1.5px solid rgba(255,255,255,.3);
-    }
+    .btn-ghost { background: rgba(255,255,255,.12); color: var(--white); border: 1.5px solid rgba(255,255,255,.3); }
     .btn-ghost:hover { background: rgba(255,255,255,.2); transform: translateY(-2px); }
-    .hero-stats {
-      display: flex; justify-content: center; gap: 40px;
-      margin-top: 56px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,.15);
-      flex-wrap: wrap;
-    }
+    .hero-stats { display: flex; justify-content: center; gap: 40px; margin-top: 56px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,.15); flex-wrap: wrap; }
     .stat-item { text-align: center; }
     .stat-num { font-size: 2rem; font-weight: 800; color: var(--green-300); }
     .stat-label { font-size: 12px; color: rgba(255,255,255,.6); margin-top: 4px; }
 
-    /* ===== Section Common ===== */
+    /* SECTION COMMON */
     section { padding: 96px 24px; }
     .container { max-width: 1100px; margin: 0 auto; }
-    .section-tag {
-      display: inline-block; background: var(--green-100); color: var(--green-800);
-      font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-      padding: 4px 14px; border-radius: 20px; margin-bottom: 14px;
-    }
-    .section-title {
-      font-size: clamp(1.7rem, 4vw, 2.6rem); font-weight: 800;
-      color: var(--gray-900); line-height: 1.2; margin-bottom: 16px;
-    }
-    .section-desc {
-      font-size: 16px; color: var(--gray-600); max-width: 600px; line-height: 1.8;
-    }
-    .section-header { margin-bottom: 56px; }
+    .section-tag { display: inline-block; background: var(--green-100); color: var(--green-800); font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 14px; }
+    .section-title { font-size: clamp(1.6rem, 4vw, 2.5rem); font-weight: 800; color: var(--gray-900); line-height: 1.2; margin-bottom: 16px; }
+    .section-desc { font-size: 15px; color: var(--gray-600); max-width: 600px; line-height: 1.8; }
+    .section-header { margin-bottom: 52px; }
+    .center-header { text-align: center; }
+    .center-header .section-desc { margin: 0 auto; }
 
-    /* ===== Timeline ===== */
+    /* FADE ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; } .d3 { transition-delay: .3s; } .d4 { transition-delay: .4s; }
+
+    /* TIMELINE */
     #timeline { background: var(--gray-100); }
-    .timeline-header { text-align: center; }
-    .timeline-header .section-desc { margin: 0 auto; }
-
-    .timeline {
-      position: relative; max-width: 900px; margin: 0 auto;
-      padding-left: 0;
-    }
-    .timeline::before {
-      content: ''; position: absolute; left: 50%; transform: translateX(-50%);
-      top: 0; bottom: 0; width: 3px;
-      background: linear-gradient(to bottom, var(--green-400), var(--green-700));
-      border-radius: 3px;
-    }
-    .tl-item {
-      display: flex; margin-bottom: 60px; position: relative;
-      align-items: flex-start;
-    }
+    .timeline { position: relative; max-width: 900px; margin: 0 auto; }
+    .timeline::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--green-400), var(--green-700)); border-radius: 3px; }
+    .tl-item { display: flex; margin-bottom: 56px; position: relative; align-items: flex-start; }
     .tl-item:nth-child(odd) { flex-direction: row; }
     .tl-item:nth-child(even) { flex-direction: row-reverse; }
-    .tl-content {
-      width: calc(50% - 48px); background: var(--white);
-      border-radius: var(--radius-lg); padding: 28px 30px;
-      box-shadow: var(--shadow-md); position: relative;
-      transition: var(--transition);
-      border: 1px solid rgba(16,185,129,.1);
-    }
+    .tl-content { width: calc(50% - 48px); background: var(--white); border-radius: var(--r-lg); padding: 26px 28px; box-shadow: var(--shadow-md); transition: var(--t); border: 1px solid rgba(16,185,129,.1); }
     .tl-content:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
-    .tl-item:nth-child(odd)  .tl-content { margin-right: auto; }
+    .tl-item:nth-child(odd) .tl-content { margin-right: auto; }
     .tl-item:nth-child(even) .tl-content { margin-left: auto; }
-    .tl-dot {
-      position: absolute; left: 50%; transform: translateX(-50%);
-      width: 52px; height: 52px; background: linear-gradient(135deg, var(--green-700), var(--green-400));
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 20px; box-shadow: 0 0 0 6px var(--green-100);
-      z-index: 10; flex-shrink: 0; top: 16px;
-    }
-    .tl-date {
-      font-size: 12px; font-weight: 700; color: var(--green-700);
-      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px;
-    }
-    .tl-title { font-size: 18px; font-weight: 700; color: var(--gray-900); margin-bottom: 12px; }
-    .tl-desc { font-size: 14px; color: var(--gray-600); line-height: 1.8; }
-    .tl-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
-    .tl-tag {
-      background: var(--green-50); color: var(--green-700);
-      font-size: 11px; font-weight: 600; padding: 3px 10px;
-      border-radius: 20px; border: 1px solid var(--green-200);
-    }
+    .tl-dot { position: absolute; left: 50%; transform: translateX(-50%); width: 50px; height: 50px; background: linear-gradient(135deg, var(--green-700), var(--green-400)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 0 0 6px var(--green-100); z-index: 10; top: 14px; }
+    .tl-date { font-size: 11px; font-weight: 700; color: var(--green-700); letter-spacing: 1px; margin-bottom: 6px; }
+    .tl-title { font-size: 17px; font-weight: 700; color: var(--gray-900); margin-bottom: 10px; }
+    .tl-desc { font-size: 13.5px; color: var(--gray-600); line-height: 1.8; }
+    .tl-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+    .tl-tag { background: var(--green-50); color: var(--green-700); font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; border: 1px solid var(--green-200); }
 
-    /* ===== Core Concepts ===== */
-    #concepts { background: var(--white); }
-    .concepts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
-    .concept-card {
-      background: var(--white); border-radius: var(--radius-lg);
-      padding: 36px 32px; box-shadow: var(--shadow-md);
-      border: 1px solid var(--gray-200);
-      transition: var(--transition); position: relative; overflow: hidden;
-    }
-    .concept-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-      background: linear-gradient(90deg, var(--green-700), var(--green-400));
-    }
+    /* CONGRESS SCENE (icon-based) */
+    #congress { background: var(--white); }
+    .congress-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin-bottom: 64px; }
+    .congress-text h3 { font-size: 1.4rem; font-weight: 700; color: var(--gray-900); margin-bottom: 14px; }
+    .congress-text p { font-size: 14px; color: var(--gray-600); line-height: 1.85; margin-bottom: 12px; }
+    .congress-visual { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); border-radius: var(--r-xl); padding: 40px 36px; text-align: center; position: relative; overflow: hidden; }
+    .congress-visual::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #e11d48, #f43f5e, #fb7185); }
+    .congress-visual-icon { font-size: 72px; margin-bottom: 16px; filter: drop-shadow(0 4px 12px rgba(0,0,0,.4)); }
+    .congress-visual-title { font-size: 18px; font-weight: 800; color: var(--white); margin-bottom: 6px; }
+    .congress-visual-sub { font-size: 13px; color: rgba(255,255,255,.55); margin-bottom: 24px; }
+    .congress-badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .congress-badge { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,.8); font-weight: 500; }
+    .congress-agenda { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .agenda-card { background: var(--gray-100); border-radius: var(--r-md); padding: 24px 20px; border-left: 4px solid var(--green-500); transition: var(--t); }
+    .agenda-card:hover { background: var(--green-50); border-left-color: var(--green-700); transform: translateX(4px); }
+    .agenda-num { font-size: 11px; font-weight: 700; color: var(--green-600); letter-spacing: 1px; margin-bottom: 6px; }
+    .agenda-title { font-size: 15px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+    .agenda-desc { font-size: 13px; color: var(--gray-600); line-height: 1.7; }
+    .congress-result-bar { margin-top: 48px; background: linear-gradient(135deg, var(--green-800), var(--green-600)); border-radius: var(--r-lg); padding: 28px 36px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .result-icon { font-size: 36px; flex-shrink: 0; }
+    .result-text h4 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .result-text p { font-size: 13px; color: rgba(255,255,255,.7); }
+    .result-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
+    .result-pill { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: var(--white); font-weight: 600; }
+
+    /* CONCEPTS */
+    #concepts { background: var(--green-50); }
+    .concepts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .concept-card { background: var(--white); border-radius: var(--r-lg); padding: 34px 30px; box-shadow: var(--shadow-md); border: 1px solid var(--gray-200); transition: var(--t); position: relative; overflow: hidden; }
+    .concept-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--green-700), var(--green-400)); }
     .concept-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); border-color: var(--green-300); }
-    .concept-icon {
-      width: 56px; height: 56px; background: var(--green-50);
-      border-radius: var(--radius-md); display: flex; align-items: center;
-      justify-content: center; font-size: 26px; margin-bottom: 20px;
-    }
-    .concept-title { font-size: 20px; font-weight: 700; color: var(--gray-900); margin-bottom: 12px; }
-    .concept-desc { font-size: 14px; color: var(--gray-600); line-height: 1.85; margin-bottom: 20px; }
+    .concept-icon { width: 54px; height: 54px; background: var(--green-50); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; font-size: 25px; margin-bottom: 18px; }
+    .concept-title { font-size: 19px; font-weight: 700; color: var(--gray-900); margin-bottom: 10px; }
+    .concept-desc { font-size: 13.5px; color: var(--gray-600); line-height: 1.85; margin-bottom: 18px; }
     .concept-points { list-style: none; }
-    .concept-points li {
-      font-size: 13.5px; color: var(--gray-700); padding: 6px 0;
-      border-bottom: 1px solid var(--gray-100);
-      display: flex; gap: 8px; align-items: flex-start;
-    }
+    .concept-points li { font-size: 13px; color: var(--gray-700); padding: 5px 0; border-bottom: 1px solid var(--gray-100); display: flex; gap: 8px; align-items: flex-start; }
     .concept-points li:last-child { border-bottom: none; }
     .concept-points li::before { content: '▸'; color: var(--green-600); flex-shrink: 0; margin-top: 2px; }
 
-    /* ===== Reform Meetings ===== */
+    /* MEMBERS */
+    #members { background: var(--white); }
+    .members-top { display: flex; align-items: center; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; }
+    .members-count-box { background: linear-gradient(135deg, var(--green-800), var(--green-600)); border-radius: var(--r-lg); padding: 20px 32px; text-align: center; flex-shrink: 0; }
+    .members-count-num { font-size: 3rem; font-weight: 900; color: var(--white); line-height: 1; }
+    .members-count-label { font-size: 13px; color: rgba(255,255,255,.7); margin-top: 4px; }
+    .members-intro { flex: 1; font-size: 14px; color: var(--gray-600); line-height: 1.85; }
+    .members-intro strong { color: var(--green-800); }
+
+    /* Leader box */
+    .leader-box { background: linear-gradient(135deg, #1e3a5f, #2d5f8a); border-radius: var(--r-lg); padding: 28px 32px; margin-bottom: 28px; }
+    .leader-box-title { font-size: 13px; font-weight: 700; color: var(--green-300); letter-spacing: 1.5px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .leader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+    .leader-card { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: var(--r-md); padding: 16px 18px; transition: var(--t); }
+    .leader-card:hover { background: rgba(255,255,255,.18); transform: translateY(-2px); }
+    .leader-role { font-size: 11px; color: rgba(255,255,255,.55); margin-bottom: 4px; }
+    .leader-name { font-size: 17px; font-weight: 800; color: var(--white); }
+    .leader-tag { display: inline-block; margin-top: 6px; background: var(--green-500); color: var(--white); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+
+    /* Group sections */
+    .groups-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .group-card { background: var(--white); border-radius: var(--r-lg); padding: 26px 22px; box-shadow: var(--shadow-md); border: 1px solid var(--gray-200); transition: var(--t); }
+    .group-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+    .group-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 2px solid var(--green-100); }
+    .group-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .group-icon.red { background: var(--red-100); }
+    .group-icon.blue { background: #e0f2fe; }
+    .group-icon.green { background: var(--green-100); }
+    .group-name { font-size: 15px; font-weight: 700; color: var(--gray-900); }
+    .group-count { font-size: 11px; color: var(--gray-400); }
+    .member-row { display: flex; gap: 6px; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid var(--gray-100); }
+    .member-row:last-child { border-bottom: none; }
+    .member-role-tag { font-size: 10px; background: var(--green-50); color: var(--green-700); border: 1px solid var(--green-200); border-radius: 8px; padding: 1px 6px; white-space: nowrap; flex-shrink: 0; margin-top: 3px; }
+    .member-name { font-size: 14px; font-weight: 600; color: var(--gray-800); }
+    .member-sub { font-size: 11px; color: var(--gray-400); }
+
+    /* MEETINGS */
     #meetings { background: linear-gradient(180deg, var(--green-50) 0%, var(--white) 100%); }
-    .meetings-header { text-align: center; }
-    .meetings-header .section-desc { margin: 0 auto; }
-    .meetings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-    .meeting-card {
-      background: var(--white); border-radius: var(--radius-lg);
-      padding: 32px 28px; box-shadow: var(--shadow-md);
-      border: 1px solid var(--gray-200);
-      transition: var(--transition);
-      display: flex; flex-direction: column;
-    }
+    .meetings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .meeting-card { background: var(--white); border-radius: var(--r-lg); padding: 30px 26px; box-shadow: var(--shadow-md); border: 1px solid var(--gray-200); transition: var(--t); display: flex; flex-direction: column; }
     .meeting-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); border-color: var(--green-200); }
-    .meeting-num {
-      font-size: 48px; font-weight: 900;
-      background: linear-gradient(135deg, var(--green-200), var(--green-400));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text; line-height: 1; margin-bottom: 12px;
-    }
-    .meeting-title { font-size: 17px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
-    .meeting-date {
-      font-size: 12px; color: var(--green-600); font-weight: 600;
-      background: var(--green-50); padding: 3px 10px; border-radius: 12px;
-      display: inline-block; margin-bottom: 16px;
-    }
-    .meeting-desc { font-size: 14px; color: var(--gray-600); line-height: 1.8; flex: 1; }
-    .meeting-outcomes { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--gray-100); }
-    .meeting-outcomes-title { font-size: 12px; font-weight: 700; color: var(--gray-400); letter-spacing: 1px; margin-bottom: 10px; }
-    .outcome-item {
-      display: flex; gap: 8px; align-items: flex-start;
-      font-size: 13px; color: var(--gray-700); margin-bottom: 7px;
-    }
-    .outcome-item .check {
-      width: 18px; height: 18px; background: var(--green-500); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 10px; color: var(--white); flex-shrink: 0; margin-top: 2px;
-    }
+    .meeting-num { font-size: 46px; font-weight: 900; background: linear-gradient(135deg, var(--green-200), var(--green-400)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 10px; }
+    .meeting-title { font-size: 16px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+    .meeting-date { font-size: 11px; color: var(--green-600); font-weight: 600; background: var(--green-50); padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 14px; }
+    .meeting-desc { font-size: 13.5px; color: var(--gray-600); line-height: 1.8; flex: 1; }
+    .meeting-outcomes { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-100); }
+    .meeting-outcomes-title { font-size: 11px; font-weight: 700; color: var(--gray-400); letter-spacing: 1px; margin-bottom: 8px; }
+    .outcome-item { display: flex; gap: 7px; align-items: flex-start; font-size: 12.5px; color: var(--gray-700); margin-bottom: 6px; }
+    .outcome-item .check { width: 17px; height: 17px; background: var(--green-500); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--white); flex-shrink: 0; margin-top: 2px; }
 
-    /* ===== Principles ===== */
-    #principles { background: var(--gray-900); }
-    .principles-header .section-title { color: var(--white); }
-    .principles-header .section-tag { background: rgba(16,185,129,.2); color: var(--green-400); }
-    .principles-header .section-desc { color: var(--gray-400); }
-    .manifesto-box {
-      background: linear-gradient(135deg, var(--green-900), var(--green-800));
-      border-radius: var(--radius-xl); padding: 56px 48px;
-      border: 1px solid rgba(52,211,153,.2);
-      text-align: center; max-width: 800px; margin: 0 auto 56px;
-    }
-    .manifesto-text {
-      font-size: clamp(1.1rem, 3vw, 1.5rem); font-weight: 700;
-      color: var(--white); line-height: 1.8; letter-spacing: .5px;
-    }
+    /* RULES */
+    #rules { background: var(--gray-900); }
+    #rules .section-title { color: var(--white); }
+    #rules .section-tag { background: rgba(220,38,38,.2); color: #fca5a5; }
+    #rules .section-desc { color: var(--gray-400); }
+    .rules-header-box { background: linear-gradient(135deg, #7f1d1d, #991b1b); border-radius: var(--r-xl); padding: 40px 44px; margin-bottom: 48px; text-align: center; border: 1px solid rgba(239,68,68,.2); }
+    .rules-header-icon { font-size: 56px; margin-bottom: 14px; }
+    .rules-header-title { font-size: 1.6rem; font-weight: 800; color: var(--white); margin-bottom: 8px; }
+    .rules-header-sub { font-size: 13px; color: rgba(255,255,255,.55); }
+    .rules-chapters { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .rule-chapter { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: var(--r-lg); overflow: hidden; transition: var(--t); }
+    .rule-chapter:hover { background: rgba(255,255,255,.07); border-color: rgba(239,68,68,.25); }
+    .chapter-header { background: rgba(185,28,28,.25); padding: 16px 22px; display: flex; align-items: center; gap: 12px; }
+    .chapter-num { width: 32px; height: 32px; background: var(--red-600); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--white); flex-shrink: 0; }
+    .chapter-title { font-size: 15px; font-weight: 700; color: var(--white); }
+    .chapter-body { padding: 18px 22px; }
+    .rule-item { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .rule-item:last-child { border-bottom: none; }
+    .rule-dot { width: 6px; height: 6px; background: #fca5a5; border-radius: 50%; flex-shrink: 0; margin-top: 8px; }
+    .rule-text { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.75; }
+    .rule-text strong { color: rgba(255,255,255,.9); }
+    .rules-footer { margin-top: 36px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: var(--r-lg); padding: 24px 28px; text-align: center; }
+    .rules-footer p { font-size: 13px; color: rgba(255,255,255,.4); }
+    .rules-footer strong { color: rgba(255,255,255,.7); }
+
+    /* PRINCIPLES */
+    #principles { background: var(--gray-800); }
+    #principles .section-title { color: var(--white); }
+    #principles .section-tag { background: rgba(16,185,129,.2); color: var(--green-400); }
+    #principles .section-desc { color: var(--gray-400); }
+    .manifesto-box { background: linear-gradient(135deg, var(--green-900), var(--green-800)); border-radius: var(--r-xl); padding: 52px 44px; border: 1px solid rgba(52,211,153,.2); text-align: center; max-width: 800px; margin: 0 auto 48px; }
+    .manifesto-text { font-size: clamp(1.05rem, 2.8vw, 1.4rem); font-weight: 700; color: var(--white); line-height: 1.8; }
     .manifesto-text em { color: var(--green-300); font-style: normal; }
-    .manifesto-author { margin-top: 20px; font-size: 13px; color: rgba(255,255,255,.4); }
-    .principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-    .principle-item {
-      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius-md); padding: 28px 24px;
-      transition: var(--transition);
-    }
+    .manifesto-author { margin-top: 18px; font-size: 13px; color: rgba(255,255,255,.35); }
+    .principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+    .principle-item { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09); border-radius: var(--r-md); padding: 26px 22px; transition: var(--t); }
     .principle-item:hover { background: rgba(16,185,129,.1); border-color: rgba(52,211,153,.3); transform: translateY(-4px); }
-    .principle-icon { font-size: 28px; margin-bottom: 14px; }
-    .principle-title { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
-    .principle-desc { font-size: 13.5px; color: rgba(255,255,255,.55); line-height: 1.75; }
+    .principle-icon { font-size: 26px; margin-bottom: 12px; }
+    .principle-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 7px; }
+    .principle-desc { font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.75; }
 
-    /* ===== Digital Reform ===== */
+    /* DIGITAL */
     #digital { background: var(--white); }
-    .digital-split {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
-    }
-    .digital-features { display: flex; flex-direction: column; gap: 24px; }
-    .feature-row {
-      display: flex; gap: 18px; align-items: flex-start;
-      padding: 22px; border-radius: var(--radius-md);
-      border: 1px solid var(--gray-200); transition: var(--transition);
-    }
+    .digital-split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .digital-features { display: flex; flex-direction: column; gap: 20px; }
+    .feature-row { display: flex; gap: 16px; align-items: flex-start; padding: 20px; border-radius: var(--r-md); border: 1px solid var(--gray-200); transition: var(--t); }
     .feature-row:hover { border-color: var(--green-300); background: var(--green-50); }
-    .feature-icon {
-      width: 48px; height: 48px; background: linear-gradient(135deg, var(--green-700), var(--green-500));
-      border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
-      font-size: 22px; flex-shrink: 0;
-    }
-    .feature-title { font-size: 16px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
-    .feature-desc { font-size: 13.5px; color: var(--gray-600); line-height: 1.75; }
-    .digital-visual {
-      background: linear-gradient(135deg, var(--green-900) 0%, var(--green-700) 100%);
-      border-radius: var(--radius-xl); padding: 40px; color: var(--white);
-      box-shadow: var(--shadow-xl); position: relative; overflow: hidden;
-    }
-    .digital-visual::after {
-      content: ''; position: absolute; top: -40px; right: -40px;
-      width: 180px; height: 180px; background: rgba(255,255,255,.06);
-      border-radius: 50%;
-    }
-    .app-title { font-size: 13px; letter-spacing: 2px; color: var(--green-300); font-weight: 700; margin-bottom: 20px; }
-    .app-name { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
-    .app-sub { font-size: 13px; color: rgba(255,255,255,.6); margin-bottom: 28px; }
-    .app-features { display: flex; flex-direction: column; gap: 12px; }
-    .app-feature {
-      display: flex; gap: 12px; align-items: center;
-      background: rgba(255,255,255,.1); border-radius: 10px; padding: 14px 16px;
-    }
-    .app-feature-icon { font-size: 18px; flex-shrink: 0; }
-    .app-feature-text { font-size: 14px; }
-    .app-feature-text strong { display: block; font-weight: 700; margin-bottom: 2px; }
-    .app-feature-text span { font-size: 12px; color: rgba(255,255,255,.6); }
+    .feature-icon { width: 46px; height: 46px; background: linear-gradient(135deg, var(--green-700), var(--green-500)); border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .feature-title { font-size: 15px; font-weight: 700; color: var(--gray-900); margin-bottom: 5px; }
+    .feature-desc { font-size: 13px; color: var(--gray-600); line-height: 1.75; }
+    .digital-visual { background: linear-gradient(135deg, var(--green-900) 0%, var(--green-700) 100%); border-radius: var(--r-xl); padding: 38px; color: var(--white); box-shadow: var(--shadow-xl); }
+    .app-title { font-size: 12px; letter-spacing: 2px; color: var(--green-300); font-weight: 700; margin-bottom: 18px; }
+    .app-name { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+    .app-sub { font-size: 12px; color: rgba(255,255,255,.55); margin-bottom: 24px; }
+    .app-features { display: flex; flex-direction: column; gap: 10px; }
+    .app-feature { display: flex; gap: 10px; align-items: center; background: rgba(255,255,255,.1); border-radius: 9px; padding: 12px 14px; }
+    .app-feature-icon { font-size: 17px; flex-shrink: 0; }
+    .app-feature-text strong { display: block; font-size: 14px; font-weight: 700; margin-bottom: 1px; }
+    .app-feature-text span { font-size: 11px; color: rgba(255,255,255,.55); }
 
-    /* ===== Goals ===== */
+    /* GOALS */
     #goals { background: var(--green-50); }
-    .goals-header { text-align: center; }
-    .goals-header .section-desc { margin: 0 auto; }
-    .goals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px; }
-    .goal-card {
-      background: var(--white); border-radius: var(--radius-lg);
-      padding: 36px 28px; text-align: center;
-      box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
-      transition: var(--transition);
-    }
+    .goals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 44px; }
+    .goal-card { background: var(--white); border-radius: var(--r-lg); padding: 34px 26px; text-align: center; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200); transition: var(--t); }
     .goal-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); border-color: var(--green-300); }
-    .goal-emoji { font-size: 40px; margin-bottom: 16px; }
-    .goal-title { font-size: 18px; font-weight: 700; color: var(--gray-900); margin-bottom: 10px; }
-    .goal-desc { font-size: 14px; color: var(--gray-600); line-height: 1.8; }
-    .goal-badge {
-      display: inline-block; margin-top: 14px;
-      background: var(--green-100); color: var(--green-700);
-      font-size: 12px; font-weight: 700; padding: 4px 12px;
-      border-radius: 20px;
-    }
-    .reform-slogan {
-      background: linear-gradient(135deg, var(--green-800), var(--green-600));
-      border-radius: var(--radius-xl); padding: 40px 48px;
-      text-align: center; color: var(--white);
-    }
-    .reform-slogan p { font-size: 14px; color: rgba(255,255,255,.7); margin-bottom: 16px; }
-    .reform-slogan .slogan-text {
-      font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 700; color: var(--white);
-      line-height: 1.8;
-    }
+    .goal-emoji { font-size: 38px; margin-bottom: 14px; }
+    .goal-title { font-size: 17px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px; }
+    .goal-desc { font-size: 13.5px; color: var(--gray-600); line-height: 1.8; }
+    .goal-badge { display: inline-block; margin-top: 12px; background: var(--green-100); color: var(--green-700); font-size: 11px; font-weight: 700; padding: 3px 11px; border-radius: 20px; }
+    .reform-slogan { background: linear-gradient(135deg, var(--green-800), var(--green-600)); border-radius: var(--r-xl); padding: 36px 44px; text-align: center; color: var(--white); }
+    .reform-slogan p { font-size: 13px; color: rgba(255,255,255,.65); margin-bottom: 14px; }
+    .reform-slogan .slogan-text { font-size: clamp(.95rem, 2.5vw, 1.35rem); font-weight: 700; color: var(--white); line-height: 1.8; }
     .reform-slogan .slogan-text span { color: var(--green-300); }
 
-    /* ===== Footer ===== */
-    footer {
-      background: var(--gray-900); padding: 48px 24px 32px;
-      color: rgba(255,255,255,.5); text-align: center;
-    }
-    .footer-logo {
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      margin-bottom: 20px;
-    }
-    .footer-logo .logo-icon {
-      width: 36px; height: 36px; background: linear-gradient(135deg, var(--green-700), var(--green-400));
-      border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 17px;
-    }
-    .footer-logo .logo-text { font-size: 18px; font-weight: 700; color: var(--white); }
-    .footer-tagline { font-size: 14px; margin-bottom: 28px; line-height: 1.6; }
-    .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 28px; flex-wrap: wrap; }
-    .footer-links a { color: rgba(255,255,255,.4); text-decoration: none; font-size: 13px; transition: var(--transition); }
+    /* FOOTER */
+    footer { background: var(--gray-900); padding: 44px 24px 28px; color: rgba(255,255,255,.45); text-align: center; }
+    .footer-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 16px; }
+    .footer-logo .logo-icon { width: 34px; height: 34px; background: linear-gradient(135deg, var(--green-700), var(--green-400)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .footer-logo .logo-text { font-size: 17px; font-weight: 700; color: var(--white); }
+    .footer-tagline { font-size: 13px; margin-bottom: 24px; line-height: 1.6; }
+    .footer-links { display: flex; justify-content: center; gap: 18px; margin-bottom: 24px; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,.35); text-decoration: none; font-size: 12px; transition: var(--t); }
     .footer-links a:hover { color: var(--green-400); }
-    .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin-bottom: 20px; }
-    .footer-copyright { font-size: 12px; color: rgba(255,255,255,.25); }
+    .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,.07); margin-bottom: 18px; }
+    .footer-copyright { font-size: 11px; color: rgba(255,255,255,.22); }
 
-    /* ===== Back to Top ===== */
-    #back-top {
-      position: fixed; bottom: 28px; right: 28px; z-index: 900;
-      width: 46px; height: 46px; background: var(--green-700);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      color: var(--white); font-size: 18px; box-shadow: var(--shadow-md);
-      cursor: pointer; transition: var(--transition);
-      opacity: 0; pointer-events: none; border: none;
-    }
+    /* BACK TO TOP */
+    #back-top { position: fixed; bottom: 28px; right: 28px; z-index: 900; width: 44px; height: 44px; background: var(--green-700); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 17px; box-shadow: var(--shadow-md); cursor: pointer; transition: var(--t); opacity: 0; pointer-events: none; border: none; }
     #back-top.visible { opacity: 1; pointer-events: all; }
-    #back-top:hover { background: var(--green-600); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    #back-top:hover { background: var(--green-600); transform: translateY(-3px); }
 
-    /* ===== Animations ===== */
-    .fade-up {
-      opacity: 0; transform: translateY(30px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-    .fade-delay-1 { transition-delay: .1s; }
-    .fade-delay-2 { transition-delay: .2s; }
-    .fade-delay-3 { transition-delay: .3s; }
-    .fade-delay-4 { transition-delay: .4s; }
-
-    /* ===== Responsive ===== */
+    /* RESPONSIVE */
     @media (max-width: 900px) {
-      .timeline::before { left: 28px; }
-      .tl-item { flex-direction: column !important; padding-left: 64px; }
+      .timeline::before { left: 26px; }
+      .tl-item { flex-direction: column !important; padding-left: 60px; }
       .tl-content { width: 100%; }
-      .tl-dot { left: 28px; top: 0; }
-      .meetings-grid { grid-template-columns: 1fr; }
-      .goals-grid { grid-template-columns: 1fr; }
-      .digital-split { grid-template-columns: 1fr; }
-      .digital-visual { order: -1; }
-      .manifesto-box { padding: 36px 24px; }
+      .tl-dot { left: 26px; top: 0; }
+      .congress-intro, .digital-split { grid-template-columns: 1fr; }
+      .congress-visual { order: -1; }
+      .meetings-grid, .goals-grid, .groups-grid { grid-template-columns: 1fr; }
+      .rules-chapters { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       section { padding: 64px 16px; }
       .nav-links { display: none; }
-      .hero-stats { gap: 24px; }
+      .hero-stats { gap: 20px; }
       .hero-actions { flex-direction: column; align-items: center; }
-      .tl-item { padding-left: 52px; }
-      .tl-dot { width: 42px; height: 42px; font-size: 16px; }
-      .concept-card { padding: 24px 20px; }
-      .reform-slogan { padding: 28px 24px; }
+      .tl-item { padding-left: 50px; }
+      .rules-header-box { padding: 28px 20px; }
     }
-
-    /* ===== Active nav highlight via scroll ===== */
-    .nav-links a { position: relative; }
   </style>
 </head>
 <body>
 
-  <!-- NAVIGATION -->
-  <nav id="navbar">
-    <div class="nav-inner">
-      <a href="#hero" class="nav-logo">
-        <div class="logo-icon">🌲</div>
-        <div>
-          <div class="logo-text">水杉班委</div>
-          <div class="logo-sub">CAISUIer 班级官方网站</div>
-        </div>
-      </a>
-      <div class="nav-links">
-        <a href="#timeline">改革历程</a>
-        <a href="#concepts">核心理念</a>
-        <a href="#meetings">三会制度</a>
-        <a href="#digital">数智赋能</a>
-        <a href="#goals">建设目标</a>
-        <a href="#meetings" class="btn nav-cta">了解更多</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-bg-circles">
-      <span></span><span></span><span></span>
-    </div>
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="dot"></span>
-        水杉经验 · 系统化班委改革
-      </div>
-      <h1 class="hero-title">
-        一张蓝图<span class="accent">绘到底</span><br/>
-        以改革驱动班级<span class="accent">高质量发展</span>
-      </h1>
-      <p class="hero-sub">从"服务保姆型"到"实践服务型"——水杉班委的系统化改革之路</p>
-      <blockquote class="hero-quote">
-        不改革就没有出路、不创新就没有动力、不团结就没有力量、不奋斗就没有未来。
-      </blockquote>
-      <div class="hero-actions">
-        <a href="#timeline" class="btn btn-primary">📖 了解改革历程</a>
-        <a href="#concepts" class="btn btn-ghost">🔍 核心理念</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat-item">
-          <div class="stat-num">3</div>
-          <div class="stat-label">次班委会议</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">6+</div>
-          <div class="stat-label">改革方案通过</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">🏆</div>
-          <div class="stat-label">十佳团日活动班级</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">3</div>
-          <div class="stat-label">类创建目标</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TIMELINE -->
-  <section id="timeline">
-    <div class="container">
-      <div class="section-header timeline-header fade-up">
-        <span class="section-tag">改革历程</span>
-        <h2 class="section-title">水杉班委改革时间轴</h2>
-        <p class="section-desc">从初创探索到系统化改革，每一步都承载着班委对高质量班级建设的坚定信念。</p>
-      </div>
-      <div class="timeline">
-
-        <div class="tl-item fade-up">
-          <div class="tl-content">
-            <div class="tl-date">2025年12月25日</div>
-            <h3 class="tl-title">班委班子专题座谈会</h3>
-            <p class="tl-desc">四大班委（班长、团支书、副班长、学习委员）首次汇集，围绕班级考勤、课程作业、学期活动及通知传达等问题展开协商，明确期末动员工作部署，建立统一领导机制。</p>
-            <div class="tl-tags">
-              <span class="tl-tag">班委一盘棋</span>
-              <span class="tl-tag">班团一体化</span>
-              <span class="tl-tag">初步探索</span>
-            </div>
-          </div>
-          <div class="tl-dot">🌱</div>
-        </div>
-
-        <div class="tl-item fade-up fade-delay-1">
-          <div class="tl-content">
-            <div class="tl-date">2026年1月6日</div>
-            <h3 class="tl-title">期末班会 · 数智化改革启动</h3>
-            <p class="tl-desc">以"持续深化改革，打造智能化服务型班委"为主题，全体同学与班主任参与。班长正式推广"小管家"小程序改革方案，开启数智化班委管理时代。</p>
-            <div class="tl-tags">
-              <span class="tl-tag">小管家平台</span>
-              <span class="tl-tag">科技赋能</span>
-              <span class="tl-tag">数智化改革</span>
-            </div>
-          </div>
-          <div class="tl-dot">💡</div>
-        </div>
-
-        <div class="tl-item fade-up fade-delay-2">
-          <div class="tl-content">
-            <div class="tl-date">2026年3月22日</div>
-            <h3 class="tl-title">第一场：德育与班委改革研讨会</h3>
-            <p class="tl-desc">强调树立正确政绩观，压实小组化运营责任，夯实系统化改革根基。推行德育审核实施方案，以改革创新为内核，推动班委向"实践服务型"转型。</p>
-            <div class="tl-tags">
-              <span class="tl-tag">政绩观引导</span>
-              <span class="tl-tag">德育审核</span>
-              <span class="tl-tag">小组化运营</span>
-            </div>
-          </div>
-          <div class="tl-dot">📋</div>
-        </div>
-
-        <div class="tl-item fade-up fade-delay-1">
-          <div class="tl-content">
-            <div class="tl-date">2026年4月16日</div>
-            <h3 class="tl-title">第二场：班团支委第一次代表大会</h3>
-            <p class="tl-desc">审议通过班委改革、考勤改革、激励机制、经费管理、班级规章等多项方案，正式确立全新治理体系，推出「水杉班规」，实现班级治理制度化、平台化全面转型。</p>
-            <div class="tl-tags">
-              <span class="tl-tag">水杉班规</span>
-              <span class="tl-tag">考勤改革</span>
-              <span class="tl-tag">激励机制</span>
-              <span class="tl-tag">经费管理</span>
-            </div>
-          </div>
-          <div class="tl-dot">🏛️</div>
-        </div>
-
-        <div class="tl-item fade-up fade-delay-2">
-          <div class="tl-content">
-            <div class="tl-date">2026年6月8日</div>
-            <h3 class="tl-title">第三场：第二次班委班子座谈会</h3>
-            <p class="tl-desc">总结阶段成果（荣获"十佳团日活动班级"），查摆考勤、志愿时长、学业通知、德育审核等现存问题，明确以评优创建为核心，推进班级群整合、品牌建设、期末帮扶等重点工作。</p>
-            <div class="tl-tags">
-              <span class="tl-tag">十佳团日活动</span>
-              <span class="tl-tag">品牌建设</span>
-              <span class="tl-tag">期末帮扶</span>
-              <span class="tl-tag">评优创建</span>
-            </div>
-          </div>
-          <div class="tl-dot">🏆</div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CONCEPTS -->
-  <section id="concepts">
-    <div class="container">
-      <div class="section-header fade-up">
-        <span class="section-tag">核心理念</span>
-        <h2 class="section-title">水杉班委的核心思想体系</h2>
-        <p class="section-desc">以系统化改革为灵魂，以制度化、平台化、协同化为方向，构建高效现代班级治理体系。</p>
-      </div>
-      <div class="concepts-grid">
-        <div class="concept-card fade-up">
-          <div class="concept-icon">🎯</div>
-          <h3 class="concept-title">系统化改革</h3>
-          <p class="concept-desc">由班长原创性提出的核心发展思想，以顶层设计推动班委从传统"服务保姆型"向"实践服务型"全面转型，构建制度化、平台化、协同化治理格局。</p>
-          <ul class="concept-points">
-            <li>制度化治理 —— 规范班级运营规则</li>
-            <li>平台化管理 —— 数字小程序赋能</li>
-            <li>协同化运作 —— 小组化分工协同</li>
-            <li>改革示范班 —— 创建目标指引方向</li>
-          </ul>
-        </div>
-        <div class="concept-card fade-up fade-delay-1">
-          <div class="concept-icon">🤝</div>
-          <h3 class="concept-title">班团一体化</h3>
-          <p class="concept-desc">全称"班级团支部与班委会一体化运行"，通过组织架构融合、明确政治核心、制度与活动融合，实现"党建引领、团建聚力、班建落地"的协同育人效果。</p>
-          <ul class="concept-points">
-            <li>组织融合 —— 班团干部交叉任职</li>
-            <li>政治核心 —— 团支部引领班级方向</li>
-            <li>制度融合 —— 三会两制一课落地</li>
-            <li>党团班一体化 —— 协同育人升级目标</li>
-          </ul>
-        </div>
-        <div class="concept-card fade-up fade-delay-2">
-          <div class="concept-icon">♟️</div>
-          <h3 class="concept-title">班委一盘棋</h3>
-          <p class="concept-desc">在班团一体化运营机制下，以"四大班委"（班长、团支书、副班长、学习委员）为核心，推动全体班委齐心协力，拧成一股绳，为班级建设提供强大支持。</p>
-          <ul class="concept-points">
-            <li>四大班委 —— 班长统领协同运作</li>
-            <li>非必要不开会 —— 大会小开、小会不开</li>
-            <li>责无旁贷 —— 不分闲职、真抓实干</li>
-            <li>综测支持 —— 团结力量赋能综测</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MEETINGS / THREE MEETINGS SYSTEM -->
-  <section id="meetings">
-    <div class="container">
-      <div class="section-header meetings-header fade-up">
-        <span class="section-tag">三会制度</span>
-        <h2 class="section-title">班委三会制度</h2>
-        <p class="section-desc">三场班委会，锚定了一整个学期的建设与规划，是"一张蓝图绘到底"的制度化实践。</p>
-      </div>
-      <div class="meetings-grid">
-        <div class="meeting-card fade-up">
-          <div class="meeting-num">01</div>
-          <h3 class="meeting-title">德育与班委改革研讨会</h3>
-          <span class="meeting-date">📅 2026年3月22日</span>
-          <p class="meeting-desc">以思想引领贯穿始终，聚焦德育审核方案制定与小组化运营责任落实。强调每位班委要树立正确政绩观，压实系统化改革根基，推动班委从根本上转变工作理念。</p>
-          <div class="meeting-outcomes">
-            <div class="meeting-outcomes-title">📌 主要成果</div>
-            <div class="outcome-item"><div class="check">✓</div><span>通过德育审核实施方案</span></div>
-            <div class="outcome-item"><div class="check">✓</div><span>明确小组化运营责任体系</span></div>
-            <div class="outcome-item"><div class="check">✓</div><span>强化班委改革创新意识</span></div>
-          </div>
-        </div>
-        <div class="meeting-card fade-up fade-delay-1">
-          <div class="meeting-num">02</div>
-          <h3 class="meeting-title">班团支委第一次代表大会</h3>
-          <span class="meeting-date">📅 2026年4月16日</span>
-          <p class="meeting-desc">正式确立全新班级治理体系。审议通过多项改革方案，实行"小管家"平台化请假，建立"多劳多得、优劳优奖"激励机制，推行班费与团支经费分开管理，推出「水杉班规」。</p>
-          <div class="meeting-outcomes">
-            <div class="meeting-outcomes-title">📌 主要成果</div>
-            <div class="outcome-item"><div class="check">✓</div><span>通过考勤制度改革方案</span></div>
-            <div class="outcome-item"><div class="check">✓</div><span>通过激励机制实施方案</span></div>
-            <div class="outcome-item"><div class="check">✓</div><span>通过经费管理改革方案</span></div>
-            <div class="outcome-item"><div class="check">✓</div><span>正式发布「水杉班规」</span></div>
-          </div>
-        </div>
-        <div class="meeting-card fade-up fade-delay-2">
-          <div class="meeting-num">03</div>
-          <h3 class="meeting-title">第二次班委班子座谈会</h3>
-          <span class="meeting-date">📅 2026年6月8日</span>
-          <p class="meeting-desc">总结阶段成果，荣获"十佳团日活动班级"荣誉。深入查摆现存问题，明确下一阶段以评优创建为核心工作目标，推进品牌建设与期末帮扶工作，力争改革示范班。</p>
-          <div class="meeting-outcomes">
-            <div class="meeting-outcomes-title">📌 主要成果</div>
-            <div class="outcome-item"><div class="check">✓</div><span>获评十佳团日活动班级</span></div>
-            <div class="outcome-item"><div class="check">✓</div><span>推进水杉品牌建设计划</span></div>
-            <div class="outcome-item"><div class="check">✓</div><span>部署期末帮扶专项工作</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRINCIPLES -->
-  <section id="principles">
-    <div class="container">
-      <div class="section-header principles-header fade-up">
-        <span class="section-tag">思想引领</span>
-        <h2 class="section-title">水杉班委的治理准则</h2>
-        <p class="section-desc">坚持以习近平新时代中国特色社会主义思想为指导，构建民主、透明、高效的班级治理体系。</p>
-      </div>
-      <div class="manifesto-box fade-up">
-        <p class="manifesto-text">
-          <em>不改革就没有出路</em>、不创新就没有动力、<br/>
-          <em>不团结就没有力量</em>、不奋斗就没有未来。
-        </p>
-        <p class="manifesto-author">—— 水杉班委改革核心理念</p>
-      </div>
-      <div class="principles-grid">
-        <div class="principle-item fade-up">
-          <div class="principle-icon">🏛️</div>
-          <h3 class="principle-title">民主集中制</h3>
-          <p class="principle-desc">严格落实民主集中制，健全小组负责制、民主评议与匿名考核机制，保障每位同学的参与权与话语权。</p>
-        </div>
-        <div class="principle-item fade-up fade-delay-1">
-          <div class="principle-icon">⚖️</div>
-          <h3 class="principle-title">公正透明</h3>
-          <p class="principle-desc">依托"小管家"平台实现数据共享、公正互评；班费与团支经费分开管理，每月公示，专款专用，接受全体监督。</p>
-        </div>
-        <div class="principle-item fade-up fade-delay-2">
-          <div class="principle-icon">🌟</div>
-          <h3 class="principle-title">多劳多得</h3>
-          <p class="principle-desc">建立"多劳多得、优劳优奖"激励机制，以实绩说话，激发班委积极性，让贡献者得到应有认可。</p>
-        </div>
-        <div class="principle-item fade-up fade-delay-3">
-          <div class="principle-icon">🎓</div>
-          <h3 class="principle-title">以生为本</h3>
-          <p class="principle-desc">以同学为中心，服务同学成长成才，保障和改善群众的疑难杂症，让班委改革的成果实实在在惠及每一位同学。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DIGITAL -->
-  <section id="digital">
-    <div class="container">
-      <div class="digital-split">
-        <div class="fade-up">
-          <span class="section-tag">数智赋能</span>
-          <h2 class="section-title">科技驱动<br/>智能化班委管理</h2>
-          <p class="section-desc" style="margin-bottom:36px">
-            数智化时代，改革需要科技赋能。"水杉"班长引入一站式"小管家"平台，实现班级管理的系统化、程序化、规范化，让班委从繁琐事务中解放，专注于高质量服务。
-          </p>
-          <div class="digital-features">
-            <div class="feature-row">
-              <div class="feature-icon">📝</div>
-              <div>
-                <div class="feature-title">作业提交与统计</div>
-                <div class="feature-desc">学习委员通过平台轻松完成作业收集、统计，彻底告别低效的逐一收取模式，工作效率大幅提升。</div>
-              </div>
-            </div>
-            <div class="feature-row">
-              <div class="feature-icon">📅</div>
-              <div>
-                <div class="feature-title">平台化请假管理</div>
-                <div class="feature-desc">实行"小管家"平台化请假制度，简化审批流程，透明化考勤记录，实现线上一键申请与批准。</div>
-              </div>
-            </div>
-            <div class="feature-row">
-              <div class="feature-icon">💰</div>
-              <div>
-                <div class="feature-title">班费结余查询</div>
-                <div class="feature-desc">班费与团支经费分开管理，每月公示收支情况，全体同学均可实时查询，实现财务透明化管理。</div>
-              </div>
-            </div>
-            <div class="feature-row">
-              <div class="feature-icon">📢</div>
-              <div>
-                <div class="feature-title">通知确认 & 接龙报名</div>
-                <div class="feature-desc">重要通知可一键发送并追踪确认状态，活动报名接龙管理高效便捷，告别信息遗漏。</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="digital-visual fade-up fade-delay-2">
-          <div class="app-title">🌲 WATER CEDAR · PLATFORM</div>
-          <div class="app-name">小管家平台</div>
-          <div class="app-sub">一站式智能班级管理系统</div>
-          <div class="app-features">
-            <div class="app-feature">
-              <div class="app-feature-icon">✅</div>
-              <div class="app-feature-text">
-                <strong>作业管理</strong>
-                <span>一键提交 · 自动统计 · 实时追踪</span>
-              </div>
-            </div>
-            <div class="app-feature">
-              <div class="app-feature-icon">📋</div>
-              <div class="app-feature-text">
-                <strong>考勤请假</strong>
-                <span>线上申请 · 简化流程 · 透明记录</span>
-              </div>
-            </div>
-            <div class="app-feature">
-              <div class="app-feature-icon">💴</div>
-              <div class="app-feature-text">
-                <strong>经费查询</strong>
-                <span>月度公示 · 专款专用 · 全程监督</span>
-              </div>
-            </div>
-            <div class="app-feature">
-              <div class="app-feature-icon">🔔</div>
-              <div class="app-feature-text">
-                <strong>通知系统</strong>
-                <span>确认追踪 · 接龙报名 · 信息无遗漏</span>
-              </div>
-            </div>
-            <div class="app-feature">
-              <div class="app-feature-icon">📊</div>
-              <div class="app-feature-text">
-                <strong>数据共享</strong>
-                <span>公正互评 · 透明评议 · 制度化考核</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GOALS -->
-  <section id="goals">
-    <div class="container">
-      <div class="section-header goals-header fade-up">
-        <span class="section-tag">建设目标</span>
-        <h2 class="section-title">锚定三类创建目标</h2>
-        <p class="section-desc">以系统化改革为驱动，水杉班委聚焦三大核心创建目标，以高标准引领班级全面发展。</p>
-      </div>
-      <div class="goals-grid">
-        <div class="goal-card fade-up">
-          <div class="goal-emoji">📚</div>
-          <h3 class="goal-title">优良学风班级</h3>
-          <p class="goal-desc">以"多劳多得"激励机制为抓手，以学习委员数智化管理为支撑，推动全体同学共同营造浓厚学习氛围，建设优良学风班级。</p>
-          <span class="goal-badge">学风建设目标</span>
-        </div>
-        <div class="goal-card fade-up fade-delay-1">
-          <div class="goal-emoji">🌟</div>
-          <h3 class="goal-title">十佳团支部</h3>
-          <p class="goal-desc">以班团一体化为纽带，以"三会两制一课"为载体，开展高质量团日活动（已获十佳团日活动班级），全力创建十佳团支部。</p>
-          <span class="goal-badge">团建创建目标</span>
-        </div>
-        <div class="goal-card fade-up fade-delay-2">
-          <div class="goal-emoji">🏆</div>
-          <h3 class="goal-title">改革示范班</h3>
-          <p class="goal-desc">以"水杉"品牌为旗帜，以制度化治理为根基，打造可复制可推广的班委改革经验，力争评选为学校改革示范班级。</p>
-          <span class="goal-badge">改革示范目标</span>
-        </div>
-      </div>
-      <div class="reform-slogan fade-up">
-        <p>水杉班委始终坚持的改革宣言</p>
-        <p class="slogan-text">
-          持续深化系统化改革，建设<span>实践服务型</span>班委<br/>
-          打造「水杉」班级品牌，力争<span>改革示范班</span>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">
       <div class="logo-icon">🌲</div>
-      <span class="logo-text">水杉班委</span>
-    </div>
-    <p class="footer-tagline">
-      CAISUIer · 水杉班委官方网站<br/>
-      以改革创新为内核，打造"水杉"班级特色品牌
-    </p>
-    <div class="footer-links">
-      <a href="#hero">首页</a>
+      <div><div class="logo-text">水杉班委</div><div class="logo-sub">CAISUIer 班级官方网站</div></div>
+    </a>
+    <div class="nav-links">
       <a href="#timeline">改革历程</a>
-      <a href="#concepts">核心理念</a>
+      <a href="#congress">代表大会</a>
+      <a href="#members">班委成员</a>
       <a href="#meetings">三会制度</a>
+      <a href="#rules">水杉班规</a>
       <a href="#digital">数智赋能</a>
       <a href="#goals">建设目标</a>
     </div>
-    <hr class="footer-divider" />
-    <p class="footer-copyright">© 2026 水杉班委 CAISUIer · 财穗er 出品 · 水杉经验系列</p>
-  </footer>
+  </div>
+</nav>
 
-  <!-- BACK TO TOP -->
-  <button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" style="position:absolute;inset:0;pointer-events:none;">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span>水杉经验 · 系统化班委改革</div>
+    <h1 class="hero-title">一张蓝图<span class="accent">绘到底</span><br/>以改革驱动班级<span class="accent">高质量发展</span></h1>
+    <p class="hero-sub">从"服务保姆型"到"实践服务型"——水杉班委的系统化改革之路</p>
+    <blockquote class="hero-quote">不改革就没有出路、不创新就没有动力、不团结就没有力量、不奋斗就没有未来。</blockquote>
+    <div class="hero-actions">
+      <a href="#timeline" class="btn btn-primary">📖 了解改革历程</a>
+      <a href="#members" class="btn btn-ghost">👥 班委成员</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">13</div><div class="stat-label">名班委成员</div></div>
+      <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">次班委会议</div></div>
+      <div class="stat-item"><div class="stat-num">6+</div><div class="stat-label">改革方案通过</div></div>
+      <div class="stat-item"><div class="stat-num">🏆</div><div class="stat-label">十佳团日活动班级</div></div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    // ===== Navbar scroll effect =====
-    const navbar = document.getElementById('navbar');
-    const backTop = document.getElementById('back-top');
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      navbar.classList.toggle('scrolled', y > 20);
-      backTop.classList.toggle('visible', y > 400);
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="container">
+    <div class="section-header center-header fade-up">
+      <span class="section-tag">改革历程</span>
+      <h2 class="section-title">水杉班委改革时间轴</h2>
+      <p class="section-desc">从初创探索到系统化改革，每一步都承载着班委对高质量班级建设的坚定信念。</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item fade-up">
+        <div class="tl-content">
+          <div class="tl-date">2025年12月25日</div>
+          <h3 class="tl-title">班委班子专题座谈会</h3>
+          <p class="tl-desc">四大班委首次汇集，围绕班级考勤、课程作业、学期活动及通知传达等问题展开协商，明确期末动员工作部署，建立统一领导机制。</p>
+          <div class="tl-tags"><span class="tl-tag">班委一盘棋</span><span class="tl-tag">班团一体化</span><span class="tl-tag">初步探索</span></div>
+        </div>
+        <div class="tl-dot">🌱</div>
+      </div>
+      <div class="tl-item fade-up d1">
+        <div class="tl-content">
+          <div class="tl-date">2026年1月6日</div>
+          <h3 class="tl-title">期末班会 · 数智化改革启动</h3>
+          <p class="tl-desc">以"持续深化改革，打造智能化服务型班委"为主题召开期末班会，班长正式推广"小管家"小程序改革方案，开启数智化管理时代。</p>
+          <div class="tl-tags"><span class="tl-tag">小管家平台</span><span class="tl-tag">科技赋能</span><span class="tl-tag">数智化改革</span></div>
+        </div>
+        <div class="tl-dot">💡</div>
+      </div>
+      <div class="tl-item fade-up d2">
+        <div class="tl-content">
+          <div class="tl-date">2026年3月22日</div>
+          <h3 class="tl-title">第一场：德育与班委改革研讨会</h3>
+          <p class="tl-desc">聚焦德育审核方案制定与小组化运营责任落实，强调每位班委要树立正确政绩观，夯实系统化改革根基。</p>
+          <div class="tl-tags"><span class="tl-tag">政绩观引导</span><span class="tl-tag">德育审核</span><span class="tl-tag">小组化运营</span></div>
+        </div>
+        <div class="tl-dot">📋</div>
+      </div>
+      <div class="tl-item fade-up d1">
+        <div class="tl-content">
+          <div class="tl-date">2026年4月16日</div>
+          <h3 class="tl-title">第二场：班团支委第一次代表大会</h3>
+          <p class="tl-desc">审议通过班委改革、考勤改革、激励机制、经费管理、班级规章等多项方案，正式确立全新治理体系，推出《水杉班规》。</p>
+          <div class="tl-tags"><span class="tl-tag">水杉班规</span><span class="tl-tag">考勤改革</span><span class="tl-tag">激励机制</span><span class="tl-tag">经费管理</span></div>
+        </div>
+        <div class="tl-dot">🏛️</div>
+      </div>
+      <div class="tl-item fade-up d2">
+        <div class="tl-content">
+          <div class="tl-date">2026年6月8日</div>
+          <h3 class="tl-title">第三场：第二次班委班子座谈会</h3>
+          <p class="tl-desc">总结阶段成果，荣获"十佳团日活动班级"，查摆现存问题，明确以评优创建为核心，推进品牌建设与期末帮扶工作。</p>
+          <div class="tl-tags"><span class="tl-tag">十佳团日活动</span><span class="tl-tag">品牌建设</span><span class="tl-tag">期末帮扶</span><span class="tl-tag">评优创建</span></div>
+        </div>
+        <div class="tl-dot">🏆</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONGRESS -->
+<section id="congress">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-tag">代表大会</span>
+      <h2 class="section-title">班团支委第一次代表大会</h2>
+      <p class="section-desc">2026年4月16日，历史性的一天——水杉班委正式召开班团支委第一次代表大会，通过多项改革方案，确立全新班级治理体系。</p>
+    </div>
+    <div class="congress-intro">
+      <div class="congress-text fade-up">
+        <h3>🏛️ 大会背景与意义</h3>
+        <p>本次代表大会是水杉班委系统化改革的核心里程碑。在班长叶城嘉的主持下，全体班委代表齐聚一堂，以民主集中制为原则，审议并通过了多项关乎班级长远发展的重大改革方案。</p>
+        <p>大会以"<strong>持续深化班委机构改革，推动班级高质量发展</strong>"为主题，经过充分协商讨论，通过举手表决，正式确立全新班级治理体系。</p>
+        <p>本次大会的召开，标志着水杉班级治理从"经验型"迈向"制度型"的历史性转变。</p>
+      </div>
+      <div class="congress-visual fade-up d2">
+        <div class="congress-visual-icon">🏛️</div>
+        <div class="congress-visual-title">班团支委第一次代表大会</div>
+        <div class="congress-visual-sub">2026年4月16日 · 25税收3班</div>
+        <div class="congress-badges">
+          <span class="congress-badge">📜 多项方案通过</span>
+          <span class="congress-badge">🗳️ 民主集中制</span>
+          <span class="congress-badge">🌲 水杉班规发布</span>
+          <span class="congress-badge">⚡ 历史性时刻</span>
+        </div>
+      </div>
+    </div>
+    <div class="congress-agenda fade-up">
+      <div class="agenda-card">
+        <div class="agenda-num">议程 01</div>
+        <div class="agenda-title">📣 开幕与报告</div>
+        <div class="agenda-desc">班长作本学期班委工作总结报告，回顾改革历程，提出下阶段目标方向。</div>
+      </div>
+      <div class="agenda-card">
+        <div class="agenda-num">议程 02</div>
+        <div class="agenda-title">🏗️ 小组化运营方案</div>
+        <div class="agenda-desc">正式确立领导班子、团小组、常务工作小组、学业服务小组四大架构，明确各岗职责。</div>
+      </div>
+      <div class="agenda-card">
+        <div class="agenda-num">议程 03</div>
+        <div class="agenda-title">📋 考勤改革方案</div>
+        <div class="agenda-desc">推行"小管家"平台化请假制度，明确考勤机制与考勤办法，落实反诈宣传要求。</div>
+      </div>
+      <div class="agenda-card">
+        <div class="agenda-num">议程 04</div>
+        <div class="agenda-title">🌟 激励机制方案</div>
+        <div class="agenda-desc">建立"多劳多得、优劳优奖"激励体系，通过民主评议与数据考核相结合的方式激发班委积极性。</div>
+      </div>
+      <div class="agenda-card">
+        <div class="agenda-num">议程 05</div>
+        <div class="agenda-title">💰 经费管理方案</div>
+        <div class="agenda-desc">班费与团支经费分开管理，每月公示收支，专款专用，全体同学可实时查询，实现财务透明化。</div>
+      </div>
+      <div class="agenda-card">
+        <div class="agenda-num">议程 06</div>
+        <div class="agenda-title">📖 《水杉班规》审议</div>
+        <div class="agenda-desc">审议通过《水杉班规》（25税收3班班级规章），正式建立制度化、规范化班级治理章程。</div>
+      </div>
+      <div class="agenda-card">
+        <div class="agenda-num">议程 07</div>
+        <div class="agenda-title">🎯 团日活动策划</div>
+        <div class="agenda-desc">召开团日活动前期筹划会议，明确活动方向、分工与时间节点，为冲刺"十佳团支部"奠定基础。</div>
+      </div>
+      <div class="agenda-card">
+        <div class="agenda-num">议程 08</div>
+        <div class="agenda-title">🗳️ 协商与表决</div>
+        <div class="agenda-desc">全体班委代表围绕各项方案充分协商，按民主集中制原则，举手表决，逐项审议通过。</div>
+      </div>
+    </div>
+    <div class="congress-result-bar fade-up">
+      <div class="result-icon">✅</div>
+      <div class="result-text">
+        <h4>大会圆满完成，历史性成果达成</h4>
+        <p>全体方案一致通过，水杉班委正式进入制度化、规范化新阶段</p>
+      </div>
+      <div class="result-pills">
+        <span class="result-pill">🏛️ 治理制度化</span>
+        <span class="result-pill">📱 管理平台化</span>
+        <span class="result-pill">🤝 运营协同化</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERS -->
+<section id="members">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-tag">班委成员</span>
+      <h2 class="section-title">小组化运营架构</h2>
+      <p class="section-desc">现将班委集体成员协调整合，由班委领导班子、团小组、常务工作小组、学业服务小组四大架构构成，总计13名班委。</p>
+    </div>
+    <div class="members-top fade-up">
+      <div class="members-count-box">
+        <div class="members-count-num">13</div>
+        <div class="members-count-label">名班委成员</div>
+      </div>
+      <div class="members-intro">
+        以<strong>"班委一盘棋"</strong>为运营理念，在班团一体化机制下，充分发挥班委凝聚力，推动班委班子建设。以<strong>四大班委</strong>（班长、团支书、副班长、学习委员）为核心，推动全体班委齐心协力，拧成一股绳，为班级建设与发展提供有力的团队支持。
+      </div>
+    </div>
+    <!-- Leader Box -->
+    <div class="leader-box fade-up">
+      <div class="leader-box-title">⭐ 班委领导班子成员（4名）</div>
+      <div class="leader-grid">
+        <div class="leader-card">
+          <div class="leader-role">班长</div>
+          <div class="leader-name">叶城嘉</div>
+          <span class="leader-tag">核心领导</span>
+        </div>
+        <div class="leader-card">
+          <div class="leader-role">团支书</div>
+          <div class="leader-name">盛 瑶</div>
+          <span class="leader-tag">政治核心</span>
+        </div>
+        <div class="leader-card">
+          <div class="leader-role">（常务）副班长</div>
+          <div class="leader-name">胡铭婕</div>
+          <span class="leader-tag">常务执行</span>
+        </div>
+        <div class="leader-card">
+          <div class="leader-role">（一般）副班长、学习委员</div>
+          <div class="leader-name">张豫檠</div>
+          <span class="leader-tag">学业统筹</span>
+        </div>
+      </div>
+    </div>
+    <!-- Three Groups -->
+    <div class="groups-grid fade-up">
+      <!-- 团小组 -->
+      <div class="group-card">
+        <div class="group-header">
+          <div class="group-icon red">🚩</div>
+          <div><div class="group-name">团小组</div><div class="group-count">共 4 名</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">团支书</span>
+          <div><div class="member-name">盛 瑶</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">副书记</span>
+          <div><div class="member-name">叶城嘉</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">组织委员</span>
+          <div><div class="member-name">潘柳伶</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">宣传委员</span>
+          <div><div class="member-name">余奕涵</div></div>
+        </div>
+      </div>
+      <!-- 常务工作小组 -->
+      <div class="group-card">
+        <div class="group-header">
+          <div class="group-icon blue">⚙️</div>
+          <div><div class="group-name">常务工作小组</div><div class="group-count">共 5 名</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">（常务）副班长</span>
+          <div><div class="member-name">胡铭婕</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">财务总监、生活委员</span>
+          <div><div class="member-name">王姣茗</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">考勤助理、文体委员</span>
+          <div><div class="member-name">朱晨曦</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">考勤助理、安全委员</span>
+          <div><div class="member-name">顾嘉琦</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">考勤助理、安全委员</span>
+          <div><div class="member-name">盛 韬</div></div>
+        </div>
+      </div>
+      <!-- 学业服务小组 -->
+      <div class="group-card">
+        <div class="group-header">
+          <div class="group-icon green">📚</div>
+          <div><div class="group-name">学业服务小组</div><div class="group-count">共 4 名</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">（学业）副班长、学习委员</span>
+          <div><div class="member-name">张豫檠</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">学委助理、心理委员</span>
+          <div><div class="member-name">李艺琦</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">学委助理、心理委员</span>
+          <div><div class="member-name">李天池</div></div>
+        </div>
+        <div class="member-row">
+          <span class="member-role-tag">学委助理、创业委员</span>
+          <div><div class="member-name">李尚泽</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTS -->
+<section id="concepts">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-tag">核心理念</span>
+      <h2 class="section-title">水杉班委的核心思想体系</h2>
+      <p class="section-desc">以系统化改革为灵魂，以制度化、平台化、协同化为方向，构建高效现代班级治理体系。</p>
+    </div>
+    <div class="concepts-grid">
+      <div class="concept-card fade-up">
+        <div class="concept-icon">🎯</div>
+        <h3 class="concept-title">系统化改革</h3>
+        <p class="concept-desc">由班长原创性提出的核心发展思想，以顶层设计推动班委从传统"服务保姆型"向"实践服务型"全面转型，构建制度化、平台化、协同化治理格局。</p>
+        <ul class="concept-points">
+          <li>制度化治理 —— 规范班级运营规则</li>
+          <li>平台化管理 —— 数字小程序赋能</li>
+          <li>协同化运作 —— 小组化分工协同</li>
+          <li>改革示范班 —— 创建目标指引方向</li>
+        </ul>
+      </div>
+      <div class="concept-card fade-up d1">
+        <div class="concept-icon">🤝</div>
+        <h3 class="concept-title">班团一体化</h3>
+        <p class="concept-desc">全称"班级团支部与班委会一体化运行"，通过组织架构融合、明确政治核心、制度与活动融合，实现"党建引领、团建聚力、班建落地"协同育人。</p>
+        <ul class="concept-points">
+          <li>组织融合 —— 班团干部交叉任职</li>
+          <li>政治核心 —— 团支部引领班级方向</li>
+          <li>制度融合 —— 三会两制一课落地</li>
+          <li>党团班一体化 —— 协同育人升级目标</li>
+        </ul>
+      </div>
+      <div class="concept-card fade-up d2">
+        <div class="concept-icon">♟️</div>
+        <h3 class="concept-title">班委一盘棋</h3>
+        <p class="concept-desc">在班团一体化运营机制下，以"四大班委"为核心，推动全体班委齐心协力，拧成一股绳，为班级建设提供强大的团结队伍支持。</p>
+        <ul class="concept-points">
+          <li>四大班委 —— 班长统领协同运作</li>
+          <li>非必要不开会 —— 大会小开、小会不开</li>
+          <li>责无旁贷 —— 不分闲职、真抓实干</li>
+          <li>综测支持 —— 团结力量赋能综测</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEETINGS -->
+<section id="meetings">
+  <div class="container">
+    <div class="section-header center-header fade-up">
+      <span class="section-tag">三会制度</span>
+      <h2 class="section-title">班委三会制度</h2>
+      <p class="section-desc">三场班委会，锚定了一整个学期的建设与规划，是"一张蓝图绘到底"的制度化实践。</p>
+    </div>
+    <div class="meetings-grid">
+      <div class="meeting-card fade-up">
+        <div class="meeting-num">01</div>
+        <h3 class="meeting-title">德育与班委改革研讨会</h3>
+        <span class="meeting-date">📅 2026年3月22日</span>
+        <p class="meeting-desc">以思想引领贯穿始终，聚焦德育审核方案制定与小组化运营责任落实。强调每位班委要树立正确政绩观，压实系统化改革根基，推动班委从根本上转变工作理念。</p>
+        <div class="meeting-outcomes">
+          <div class="meeting-outcomes-title">📌 主要成果</div>
+          <div class="outcome-item"><div class="check">✓</div><span>通过德育审核实施方案</span></div>
+          <div class="outcome-item"><div class="check">✓</div><span>明确小组化运营责任体系</span></div>
+          <div class="outcome-item"><div class="check">✓</div><span>强化班委改革创新意识</span></div>
+        </div>
+      </div>
+      <div class="meeting-card fade-up d1">
+        <div class="meeting-num">02</div>
+        <h3 class="meeting-title">班团支委第一次代表大会</h3>
+        <span class="meeting-date">📅 2026年4月16日</span>
+        <p class="meeting-desc">正式确立全新班级治理体系。审议通过多项改革方案，实行"小管家"平台化请假，建立"多劳多得、优劳优奖"激励机制，推行班费与团支经费分开管理，正式发布《水杉班规》。</p>
+        <div class="meeting-outcomes">
+          <div class="meeting-outcomes-title">📌 主要成果</div>
+          <div class="outcome-item"><div class="check">✓</div><span>通过考勤制度改革方案</span></div>
+          <div class="outcome-item"><div class="check">✓</div><span>通过激励机制实施方案</span></div>
+          <div class="outcome-item"><div class="check">✓</div><span>通过经费管理改革方案</span></div>
+          <div class="outcome-item"><div class="check">✓</div><span>正式发布《水杉班规》</span></div>
+        </div>
+      </div>
+      <div class="meeting-card fade-up d2">
+        <div class="meeting-num">03</div>
+        <h3 class="meeting-title">第二次班委班子座谈会</h3>
+        <span class="meeting-date">📅 2026年6月8日</span>
+        <p class="meeting-desc">总结阶段成果，荣获"十佳团日活动班级"荣誉。深入查摆现存问题，明确下一阶段以评优创建为核心工作目标，推进品牌建设与期末帮扶工作，力争改革示范班。</p>
+        <div class="meeting-outcomes">
+          <div class="meeting-outcomes-title">📌 主要成果</div>
+          <div class="outcome-item"><div class="check">✓</div><span>获评十佳团日活动班级</span></div>
+          <div class="outcome-item"><div class="check">✓</div><span>推进水杉品牌建设计划</span></div>
+          <div class="outcome-item"><div class="check">✓</div><span>部署期末帮扶专项工作</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RULES -->
+<section id="rules">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-tag">水杉班规</span>
+      <h2 class="section-title" style="color:#fff">《水杉班规》</h2>
+      <p class="section-desc" style="color:rgba(255,255,255,.5)">25税收3班班级规章（20260416）— 在班团支委第一次代表大会上正式审议通过，确立班级治理的制度化章程。</p>
+    </div>
+    <div class="rules-header-box fade-up">
+      <div class="rules-header-icon">📖</div>
+      <div class="rules-header-title">《水杉班规》总章程</div>
+      <div class="rules-header-sub">25税收3班 · 2026年4月16日正式颁布实施 · 班团支委第一次代表大会审议通过</div>
+    </div>
+    <div class="rules-chapters fade-up">
+
+      <div class="rule-chapter">
+        <div class="chapter-header">
+          <div class="chapter-num">一</div>
+          <div class="chapter-title">总则与宗旨</div>
+        </div>
+        <div class="chapter-body">
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">本班规依据<strong>民主集中制</strong>原则，在全体班委民主协商基础上制定，适用于25税收3班全体班委成员及班级活动。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">坚持以<strong>习近平新时代中国特色社会主义思想</strong>为指导，以"服务同学、建设班级、成长成才"为根本宗旨。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">班级建设以<strong>系统化改革</strong>为驱动，推动班委从"服务保姆型"向"实践服务型"转型，打造智能化服务型班委。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">全体班委须<strong>不改革就没有出路、不创新就没有动力、不团结就没有力量、不奋斗就没有未来</strong>的精神贯穿工作全程。</div></div>
+        </div>
+      </div>
+
+      <div class="rule-chapter">
+        <div class="chapter-header">
+          <div class="chapter-num">二</div>
+          <div class="chapter-title">组织架构</div>
+        </div>
+        <div class="chapter-body">
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">班级实行<strong>小组化运营</strong>机制，由班委领导班子、团小组、常务工作小组、学业服务小组四大架构构成。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text"><strong>班委领导班子</strong>（4名）：班长为第一负责人，统领全局；团支书负责政治引领；副班长、学委分工协同。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">推行<strong>班团一体化</strong>运营机制，实现班委会与团支部的组织融合、制度融合与活动融合。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">各小组负责人对班长负责，组内成员对小组负责人负责，实现<strong>层级管理、职责清晰</strong>。</div></div>
+        </div>
+      </div>
+
+      <div class="rule-chapter">
+        <div class="chapter-header">
+          <div class="chapter-num">三</div>
+          <div class="chapter-title">考勤管理制度</div>
+        </div>
+        <div class="chapter-body">
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">全体同学须按时参加班级必要活动，因事因病请假须提前通过<strong>"小管家"平台</strong>线上申请。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">考勤工作由<strong>副班长统筹</strong>，考勤助理辅助执行，做到记录留档、公示透明。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">无故缺席班级重要活动者，由班委按程序进行提醒与记录；情节严重者，在综测评优环节作相应参考。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">班委自身须<strong>以身作则</strong>，在考勤管理中起到表率带头作用，不得享有考勤特权。</div></div>
+        </div>
+      </div>
+
+      <div class="rule-chapter">
+        <div class="chapter-header">
+          <div class="chapter-num">四</div>
+          <div class="chapter-title">激励与考核机制</div>
+        </div>
+        <div class="chapter-body">
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">建立<strong>"多劳多得、优劳优奖"</strong>激励体系，以实绩说话，让贡献者得到应有认可。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">定期开展<strong>民主评议</strong>，结合"小管家"平台数据，对班委工作进行量化考核与公开评分。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">考核结果作为<strong>综测评优、班委调整</strong>的重要依据，确保考核公正、透明、有据可查。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">严禁"挂名不干事"，对长期消极履职的班委，经民主程序讨论后可作出相应调整。</div></div>
+        </div>
+      </div>
+
+      <div class="rule-chapter">
+        <div class="chapter-header">
+          <div class="chapter-num">五</div>
+          <div class="chapter-title">经费管理规定</div>
+        </div>
+        <div class="chapter-body">
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text"><strong>班费与团支经费分开管理</strong>，各设专项账目，由财务委员负责记录与保管。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">经费支出须经班长审批，重大支出需班委会议集体讨论决定，坚持<strong>专款专用</strong>原则。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">每月通过"小管家"平台进行<strong>收支公示</strong>，全体同学均可查询，接受监督。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">严禁私自挪用、截留班费；如有违规，经查实后按民主程序作出严肃处理。</div></div>
+        </div>
+      </div>
+
+      <div class="rule-chapter">
+        <div class="chapter-header">
+          <div class="chapter-num">六</div>
+          <div class="chapter-title">会议与决策制度</div>
+        </div>
+        <div class="chapter-body">
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">坚持<strong>"大会小开、小会不开"</strong>原则：非必要不召开会议，召开必有实质议程与成果。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">重大事项须经<strong>班委集体讨论</strong>，按民主集中制原则表决，少数服从多数，个人服从集体。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">每次班委会议须形成<strong>会议纪要</strong>，明确责任人与时间节点，做到有布置、有跟踪、有反馈。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">鼓励班委成员积极建言献策，倡导<strong>开门纳谏、批评与自我批评</strong>的工作作风。</div></div>
+        </div>
+      </div>
+
+      <div class="rule-chapter">
+        <div class="chapter-header">
+          <div class="chapter-num">七</div>
+          <div class="chapter-title">信息与通知管理</div>
+        </div>
+        <div class="chapter-body">
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">通知传达统一通过<strong>"小管家"平台</strong>发布，重要通知须追踪确认状态，确保信息无遗漏。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">各班委须及时转达并落实相关通知，不得以"未看到"为由推卸传达职责。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">严格落实<strong>反诈宣传</strong>要求，定期向全体同学开展反诈提醒，切实保护同学财产安全。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">推动班级群规范整合，减少信息冗余，保障通知渠道<strong>统一、高效、权威</strong>。</div></div>
+        </div>
+      </div>
+
+      <div class="rule-chapter">
+        <div class="chapter-header">
+          <div class="chapter-num">八</div>
+          <div class="chapter-title">附则</div>
+        </div>
+        <div class="chapter-body">
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">本班规自<strong>2026年4月16日</strong>班团支委第一次代表大会通过之日起正式施行。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">本班规的修改须经<strong>班委会议集体讨论</strong>，按民主程序表决通过后方可生效。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">本班规最终解释权归<strong>25税收3班班委班子</strong>所有，由班长负责组织实施。</div></div>
+          <div class="rule-item"><div class="rule-dot"></div><div class="rule-text">本班规为公开文件，全体同学均可查阅，欢迎全体同学对班委工作进行<strong>监督与建议</strong>。</div></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="rules-footer fade-up">
+      <p>📜 <strong>《水杉班规》</strong>（25税收3班班级规章）· 2026年4月16日颁布 · 班团支委第一次代表大会通过 · <strong>财穗er 出品</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section id="principles">
+  <div class="container">
+    <div class="section-header center-header fade-up">
+      <span class="section-tag">思想引领</span>
+      <h2 class="section-title">水杉班委的治理准则</h2>
+      <p class="section-desc">坚持以习近平新时代中国特色社会主义思想为指导，构建民主、透明、高效的班级治理体系。</p>
+    </div>
+    <div class="manifesto-box fade-up">
+      <p class="manifesto-text"><em>不改革就没有出路</em>、不创新就没有动力、<br/><em>不团结就没有力量</em>、不奋斗就没有未来。</p>
+      <p class="manifesto-author">—— 水杉班委改革核心理念</p>
+    </div>
+    <div class="principles-grid">
+      <div class="principle-item fade-up"><div class="principle-icon">🏛️</div><h3 class="principle-title">民主集中制</h3><p class="principle-desc">严格落实民主集中制，健全小组负责制、民主评议与匿名考核机制，保障每位同学的参与权与话语权。</p></div>
+      <div class="principle-item fade-up d1"><div class="principle-icon">⚖️</div><h3 class="principle-title">公正透明</h3><p class="principle-desc">依托"小管家"平台实现数据共享、公正互评；班费与团支经费分开管理，每月公示，专款专用。</p></div>
+      <div class="principle-item fade-up d2"><div class="principle-icon">🌟</div><h3 class="principle-title">多劳多得</h3><p class="principle-desc">建立"多劳多得、优劳优奖"激励机制，以实绩说话，激发班委积极性，让贡献者得到应有认可。</p></div>
+      <div class="principle-item fade-up d3"><div class="principle-icon">🎓</div><h3 class="principle-title">以生为本</h3><p class="principle-desc">以同学为中心，服务同学成长成才，让班委改革的成果实实在在惠及每一位同学。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIGITAL -->
+<section id="digital">
+  <div class="container">
+    <div class="digital-split">
+      <div class="fade-up">
+        <span class="section-tag">数智赋能</span>
+        <h2 class="section-title">科技驱动<br/>智能化班委管理</h2>
+        <p class="section-desc" style="margin-bottom:32px">数智化时代，改革需要科技赋能。引入一站式"小管家"平台，实现班级管理的系统化、程序化、规范化。</p>
+        <div class="digital-features">
+          <div class="feature-row"><div class="feature-icon">📝</div><div><div class="feature-title">作业提交与统计</div><div class="feature-desc">学习委员通过平台轻松完成作业收集与统计，彻底告别低效的逐一收取模式。</div></div></div>
+          <div class="feature-row"><div class="feature-icon">📅</div><div><div class="feature-title">平台化请假管理</div><div class="feature-desc">实行"小管家"平台化请假制度，简化审批流程，透明化考勤记录。</div></div></div>
+          <div class="feature-row"><div class="feature-icon">💰</div><div><div class="feature-title">班费结余查询</div><div class="feature-desc">班费与团支经费分开管理，每月公示，全体同学可实时查询，财务透明。</div></div></div>
+          <div class="feature-row"><div class="feature-icon">📢</div><div><div class="feature-title">通知确认 &amp; 接龙报名</div><div class="feature-desc">重要通知一键发送并追踪确认状态，活动报名接龙管理高效便捷。</div></div></div>
+        </div>
+      </div>
+      <div class="digital-visual fade-up d2">
+        <div class="app-title">🌲 WATER CEDAR · PLATFORM</div>
+        <div class="app-name">小管家平台</div>
+        <div class="app-sub">一站式智能班级管理系统</div>
+        <div class="app-features">
+          <div class="app-feature"><div class="app-feature-icon">✅</div><div class="app-feature-text"><strong>作业管理</strong><span>一键提交 · 自动统计 · 实时追踪</span></div></div>
+          <div class="app-feature"><div class="app-feature-icon">📋</div><div class="app-feature-text"><strong>考勤请假</strong><span>线上申请 · 简化流程 · 透明记录</span></div></div>
+          <div class="app-feature"><div class="app-feature-icon">💴</div><div class="app-feature-text"><strong>经费查询</strong><span>月度公示 · 专款专用 · 全程监督</span></div></div>
+          <div class="app-feature"><div class="app-feature-icon">🔔</div><div class="app-feature-text"><strong>通知系统</strong><span>确认追踪 · 接龙报名 · 信息无遗漏</span></div></div>
+          <div class="app-feature"><div class="app-feature-icon">📊</div><div class="app-feature-text"><strong>数据共享</strong><span>公正互评 · 透明评议 · 制度化考核</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOALS -->
+<section id="goals">
+  <div class="container">
+    <div class="section-header center-header fade-up">
+      <span class="section-tag">建设目标</span>
+      <h2 class="section-title">锚定三类创建目标</h2>
+      <p class="section-desc">以系统化改革为驱动，水杉班委聚焦三大核心创建目标，以高标准引领班级全面发展。</p>
+    </div>
+    <div class="goals-grid">
+      <div class="goal-card fade-up"><div class="goal-emoji">📚</div><h3 class="goal-title">优良学风班级</h3><p class="goal-desc">以"多劳多得"激励机制为抓手，以学习委员数智化管理为支撑，推动全体同学共同营造浓厚学习氛围。</p><span class="goal-badge">学风建设目标</span></div>
+      <div class="goal-card fade-up d1"><div class="goal-emoji">🌟</div><h3 class="goal-title">十佳团支部</h3><p class="goal-desc">以班团一体化为纽带，以"三会两制一课"为载体，开展高质量团日活动，全力创建十佳团支部。</p><span class="goal-badge">团建创建目标</span></div>
+      <div class="goal-card fade-up d2"><div class="goal-emoji">🏆</div><h3 class="goal-title">改革示范班</h3><p class="goal-desc">以"水杉"品牌为旗帜，以制度化治理为根基，打造可复制可推广的班委改革经验，力争改革示范班。</p><span class="goal-badge">改革示范目标</span></div>
+    </div>
+    <div class="reform-slogan fade-up">
+      <p>水杉班委始终坚持的改革宣言</p>
+      <p class="slogan-text">持续深化系统化改革，建设<span>实践服务型</span>班委<br/>打造「水杉」班级品牌，力争<span>改革示范班</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="logo-icon">🌲</div>
+    <span class="logo-text">水杉班委</span>
+  </div>
+  <p class="footer-tagline">CAISUIer · 25税收3班 · 水杉班委官方网站<br/>以改革创新为内核，打造"水杉"班级特色品牌</p>
+  <div class="footer-links">
+    <a href="#hero">首页</a><a href="#timeline">改革历程</a><a href="#congress">代表大会</a>
+    <a href="#members">班委成员</a><a href="#meetings">三会制度</a><a href="#rules">水杉班规</a>
+    <a href="#digital">数智赋能</a><a href="#goals">建设目标</a>
+  </div>
+  <hr class="footer-divider"/>
+  <p class="footer-copyright">© 2026 水杉班委 CAISUIer · 财穗er 出品 · 水杉经验系列</p>
+</footer>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  const backTop = document.getElementById('back-top');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+    backTop.classList.toggle('visible', window.scrollY > 400);
+  });
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
     });
-
-    // ===== Active nav link on scroll =====
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-    const observer = new IntersectionObserver((entries) => {
+  }, { threshold: 0.3 }).observe && sections.forEach(s =>
+    new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           navLinks.forEach(l => l.classList.remove('active'));
-          const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
-          if (active) active.classList.add('active');
+          const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+          if (a) a.classList.add('active');
         }
       });
-    }, { threshold: 0.35 });
-    sections.forEach(s => observer.observe(s));
-
-    // ===== Fade-up scroll animations =====
-    const fadeEls = document.querySelectorAll('.fade-up');
-    const fadeObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          fadeObserver.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    fadeEls.forEach(el => fadeObserver.observe(el));
-
-    // ===== Smooth click for anchor links =====
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
+    }, { threshold: 0.3 }).observe(s)
+  );
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const fadeObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); fadeObs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  fadeEls.forEach(el => fadeObs.observe(el));
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
-  </script>
+  });
+</script>
 </body>
 </html>
